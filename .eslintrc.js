@@ -13,5 +13,6 @@ module.exports = {
 		parser: 'babel-eslint',
 	},
 	plugins: ['prettier'],
+	ignorePatterns: ['dist/*']
 	rules: {},
 }

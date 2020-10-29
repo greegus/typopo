@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "ES5",
+    "module": "CommonJS",
+    "strict": true,
+    "importHelpers": true,
+    "moduleResolution": "Node",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+    "types": [
+      "@types/assert",
+      "@types/jest",
+      "@types/mocha",
+      "webpack-env"
+    ],
+    "lib": [
+      "DOM",
+      "ESNext",
+      "ScriptHost"
+    ]
+  }
+}

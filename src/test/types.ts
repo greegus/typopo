@@ -1,0 +1,1 @@
+export type TestCases = {[key: string]: string}

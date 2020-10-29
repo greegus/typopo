@@ -3,11 +3,12 @@ const browsersync = require('browser-sync').create()
 const uglify = require('gulp-uglify')
 const sourcemaps = require('gulp-sourcemaps')
 const browserify = require('browserify')
-const babelify = require('babelify')
+// const babelify = require('babelify')
 const source = require('vinyl-source-stream')
 const buffer = require('vinyl-buffer')
+const tsify = require('tsify')
 
-var paths = {
+const paths = {
 	dev: {
 		html: 'demo/typopo-demo.html',
 		index: 'typopo-demo.html',
@@ -15,12 +16,12 @@ var paths = {
 		dest: 'build/',
 	},
 	browser: {
-		src: 'src/browser_typopo.js',
+		src: 'src/browser_typopo.ts',
 		name: 'typopo.min.js',
 		dest: 'dist/',
 	},
 	npm: {
-		src: 'src/typopo.js',
+		src: 'src/typopo.ts',
 		name: 'typopo_dist.min.js',
 		dest: 'dist/',
 	},
@@ -32,7 +33,8 @@ var paths = {
 
 function devBrowserBuild() {
 	return browserify({ entries: paths.browser.src, debug: true })
-		.transform('babelify')
+		.add('./src/browser_typopo.ts')
+		.plugin(tsify)
 		.bundle()
 		.pipe(source(paths.dev.name))
 		.pipe(buffer())
@@ -43,7 +45,7 @@ function devBrowserBuild() {
 
 function browserBuild() {
 	return browserify({ entries: paths.browser.src, debug: false })
-		.transform(babelify)
+		.plugin(tsify)
 		.bundle()
 		.pipe(source(paths.browser.name))
 		.pipe(buffer())
@@ -53,7 +55,7 @@ function browserBuild() {
 
 function npmBuild() {
 	return browserify({ entries: paths.npm.src }, { standalone: 'typopo' })
-		.transform('babelify')
+		.plugin(tsify)
 		.bundle()
 		.pipe(source(paths.npm.name))
 		.pipe(buffer())
